@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -11,27 +10,22 @@
   <div class="container">
     <header>
       <h1>🌐 HealthCheck Monitor</h1>
-      <p class="subtitle">Monitor the health of your web applications in real time</p>
+      <p class="subtitle">Check the live status of any website instantly</p>
     </header>
 
     <section class="form-section">
       <form action="/check" method="POST">
-        <input 
-          type="text" 
-          name="url" 
-          placeholder="🔗 Enter website URL (https://...)" 
-          required>
-        <button type="submit">Check Status</button>
+        <input type="text" name="url" placeholder="Enter website URL (https://...)" required>
+        <button type="submit">Check</button>
       </form>
     </section>
 
     {% if result %}
-    <section class="result">
-      <h2>Website Status</h2>
-      <div class="status-card {{ 'up' if 'UP' in result else 'down' }}">
-        <h3>{{ result }}</h3>
-      </div>
-    </section>
+      <section class="result">
+        <div class="status-card {% if 'UP' in result %}up{% else %}down{% endif %}">
+          {{ result }}
+        </div>
+      </section>
     {% endif %}
 
     <section class="info">
@@ -47,25 +41,5 @@
       <p>💙 Developed by <strong>Madhumitha</strong> | Powered by Flask, Docker, AKS, and GitHub Actions</p>
     </footer>
   </div>
-=======
-<html>
-<head>
-    <title>HealthCheck Monitor</title>
-    <style>
-        body { font-family: Arial; text-align: center; margin-top: 100px; }
-        input, button { padding: 10px; margin: 5px; }
-        h2 { color: #0078D7; }
-    </style>
-</head>
-<body>
-    <h2>🌐 HealthCheck Monitor</h2>
-    <form action="/check" method="POST">
-        <input type="text" name="url" placeholder="Enter website URL (https://...)" size="40" required>
-        <button type="submit">Check</button>
-    </form>
-    {% if result %}
-        <h3>{{ result }}</h3>
-    {% endif %}
->>>>>>> 9fbb2f3 (Initial commit for CI/CD setup)
 </body>
 </html>

@@ -1,21 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>HealthCheck Monitor</title>
-    <style>
-        body { font-family: Arial; text-align: center; margin-top: 100px; }
-        input, button { padding: 10px; margin: 5px; }
-        h2 { color: #0078D7; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HealthCheck Monitor</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h2>🌐 HealthCheck Monitor</h2>
-    <form action="/check" method="POST">
-        <input type="text" name="url" placeholder="Enter website URL (https://...)" size="40" required>
-        <button type="submit">Check</button>
-    </form>
+  <div class="container">
+    <header>
+      <h1>🌐 HealthCheck Monitor</h1>
+      <p class="subtitle">Monitor the health of your web applications in real time</p>
+    </header>
+
+    <section class="form-section">
+      <form action="/check" method="POST">
+        <input 
+          type="text" 
+          name="url" 
+          placeholder="🔗 Enter website URL (https://...)" 
+          required>
+        <button type="submit">Check Status</button>
+      </form>
+    </section>
+
     {% if result %}
+    <section class="result">
+      <h2>Website Status</h2>
+      <div class="status-card {{ 'up' if 'UP' in result else 'down' }}">
         <h3>{{ result }}</h3>
+      </div>
+    </section>
     {% endif %}
+
+    <section class="info">
+      <h3>How it Works 🚀</h3>
+      <ul>
+        <li>✅ Enter any public website URL.</li>
+        <li>⚙️ The app performs a live HTTP health check.</li>
+        <li>📊 Displays response status instantly (UP or DOWN).</li>
+      </ul>
+    </section>
+
+    <footer>
+      <p>💙 Developed by <strong>Madhumitha</strong> | Powered by Flask, Docker, AKS, and GitHub Actions</p>
+    </footer>
+  </div>
 </body>
 </html>

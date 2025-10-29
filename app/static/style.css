@@ -1,6 +1,120 @@
-body { font-family: Arial, Helvetica, sans-serif; display:flex; align-items:center; justify-content:center; height:100vh; background:#f4f6f8; }
-.container { background:white; padding:24px; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.08); width:420px; }
-input { width:70%; padding:8px; margin-right:8px; }
-button { padding:8px 12px; }
-.up { color: green; }
-.down { color: red; }
+/* General Layout */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #74ABE2, #5563DE);
+  color: #333;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Container */
+.container {
+  background: #fff;
+  width: 480px;
+  padding: 30px 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  animation: fadeIn 1s ease-in;
+}
+
+/* Header */
+header h1 {
+  color: #2C3E50;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #777;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+/* Form */
+.form-section input {
+  width: 70%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.form-section input:focus {
+  border-color: #5563DE;
+  box-shadow: 0 0 5px rgba(85, 99, 222, 0.5);
+}
+
+.form-section button {
+  background: #5563DE;
+  color: #fff;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.form-section button:hover {
+  background: #3944BC;
+}
+
+/* Result Section */
+.result {
+  margin-top: 25px;
+}
+
+.status-card {
+  margin-top: 10px;
+  padding: 15px;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  animation: fadeIn 0.6s ease-in;
+}
+
+.up {
+  background: #2ECC71;
+}
+
+.down {
+  background: #E74C3C;
+}
+
+/* Info Section */
+.info {
+  margin-top: 30px;
+  text-align: left;
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.info h3 {
+  color: #2C3E50;
+  margin-bottom: 10px;
+}
+
+.info ul {
+  padding-left: 20px;
+}
+
+.info li {
+  margin-bottom: 6px;
+}
+
+/* Footer */
+footer {
+  margin-top: 20px;
+  font-size: 13px;
+  color: #888;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}

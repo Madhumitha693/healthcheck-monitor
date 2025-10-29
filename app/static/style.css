@@ -1,0 +1,6 @@
+body { font-family: Arial, Helvetica, sans-serif; display:flex; align-items:center; justify-content:center; height:100vh; background:#f4f6f8; }
+.container { background:white; padding:24px; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.08); width:420px; }
+input { width:70%; padding:8px; margin-right:8px; }
+button { padding:8px 12px; }
+.up { color: green; }
+.down { color: red; }

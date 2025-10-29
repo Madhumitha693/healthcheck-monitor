@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HealthCheck Monitor</title>
+    <style>
+        body { font-family: Arial; text-align: center; margin-top: 100px; }
+        input, button { padding: 10px; margin: 5px; }
+        h2 { color: #0078D7; }
+    </style>
+</head>
+<body>
+    <h2>🌐 HealthCheck Monitor</h2>
+    <form action="/check" method="POST">
+        <input type="text" name="url" placeholder="Enter website URL (https://...)" size="40" required>
+        <button type="submit">Check</button>
+    </form>
+    {% if result %}
+        <h3>{{ result }}</h3>
+    {% endif %}
+</body>
+</html>

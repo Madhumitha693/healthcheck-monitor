@@ -1,0 +1,7 @@
+- name: Deploy HealthCheck App to AKS
+  hosts: localhost
+  tasks:
+    - name: Apply Kubernetes manifests
+      shell: |
+        kubectl apply -f ../k8s/deployment.yml
+        kubectl apply -f ../k8s/service.yml

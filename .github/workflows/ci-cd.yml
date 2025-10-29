@@ -37,3 +37,13 @@ jobs:
         run: |
           kubectl apply -f k8s/deployment.yml
           kubectl apply -f k8s/service.yml
+
+      - name: Verify Deployment
+        run: |
+          echo "⏳ Verifying deployment..."
+          kubectl get pods -o wide
+          echo "🔍 Checking service status..."
+          kubectl get svc
+          echo "🌐 Fetching External IP of service..."
+          kubectl get svc healthcheck-service -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
+          echo ""

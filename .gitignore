@@ -1,0 +1,12 @@
+# Ignore local binaries and Terraform state
+kubectl
+.terraform/
+*.exe
+*.zip
+*.tar.gz
+terraform.tfstate
+terraform.tfstate.backup
+kubectl
+.terraform/
+terraform/.terraform/
+*.exe

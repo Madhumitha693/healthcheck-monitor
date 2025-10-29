@@ -1,3 +1,6 @@
+# Updated CI/CD with verify deployment
+name: CI/CD Pipeline for HealthCheck Monitor
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest

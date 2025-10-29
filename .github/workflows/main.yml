@@ -1,0 +1,39 @@
+name: CI/CD Pipeline for HealthCheck Monitor
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Build Docker Image
+        run: docker build -t healthcheck-monitor .
+
+      - name: Push Image to Azure Container Registry (ACR)
+        run: |
+          az acr login --name healthcheckacr123
+          docker tag healthcheck-monitor healthcheckacr123.azurecr.io/healthcheck-monitor:latest
+          docker push healthcheckacr123.azurecr.io/healthcheck-monitor:latest
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+
+      - name: Connect to AKS
+        run: |
+          az aks get-credentials --resource-group healthcheck-rg --name healthcheck-aks --overwrite-existing
+
+      - name: Deploy to AKS
+        run: |
+          kubectl apply -f k8s/deployment.yml
+          kubectl apply -f k8s/service.yml

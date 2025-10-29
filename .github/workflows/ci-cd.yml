@@ -1,10 +1,7 @@
-name: CI/CD Pipeline for HealthCheck Monitor
+name: CI/CD Pipeline - HealthCheck Monitor
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
     branches:
       - main
 
@@ -43,4 +40,5 @@ jobs:
           kubectl get pods
           kubectl get svc
           echo "🔍 Fetching external IP..."
-          kubectl get svc healthcheck-service -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
+          EXTERNAL_IP=$(kubectl get svc healthcheck-service -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+          echo "🌐 Access the app here: http://$EXTERNAL_IP"

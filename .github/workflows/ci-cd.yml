@@ -8,55 +8,59 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    name: Build, Deploy & Verify HealthCheck App
 
     steps:
-      # Step 1: Checkout code
+      # 1️⃣ Checkout repo
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Log in to Azure
+      # 2️⃣ Log in to Azure
       - name: Log in to Azure
         uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      # Step 3: Log in to Azure Container Registry (ACR)
+      # 3️⃣ Log in to Azure Container Registry (ACR)
       - name: Log in to Azure Container Registry
         run: az acr login --name ${{ secrets.ACR_NAME }}
 
-      # Step 4: Build and push Docker image to ACR
+      # 4️⃣ Build & Push Docker Image
       - name: Build and push Docker image
         run: |
+          echo "🏗️ Building Docker image..."
           docker build -t ${{ secrets.ACR_NAME }}.azurecr.io/healthcheck-app:latest .
+          echo "🚀 Pushing image to ACR..."
           docker push ${{ secrets.ACR_NAME }}.azurecr.io/healthcheck-app:latest
 
-      # Step 5: Connect to AKS Cluster
+      # 5️⃣ Connect to AKS
       - name: Set AKS context
         run: az aks get-credentials --resource-group healthcheck-rg --name healthcheck-aks --overwrite-existing
 
-      # Step 6: Deploy application to AKS
+      # 6️⃣ Deploy to AKS
       - name: Deploy to AKS
         run: |
+          echo "📦 Applying deployment & service manifests..."
           kubectl apply -f k8s/deployment.yml
           kubectl apply -f k8s/service.yml
 
-      # Step 7: Verify Deployment and Capture External IP
+      # 7️⃣ Verify Deployment (this step will now always appear)
       - name: Verify Deployment
         id: verify
         run: |
-          echo "⏳ Verifying deployment..."
+          echo "⏳ Checking pod status..."
           kubectl get pods
+          echo "🔍 Checking services..."
           kubectl get svc
-          echo "🔍 Fetching external IP..."
+          echo "🌐 Fetching external IP..."
           EXTERNAL_IP=$(kubectl get svc healthcheck-service -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-          echo "🌐 Access the app here: http://$EXTERNAL_IP"
+          echo "External IP: $EXTERNAL_IP"
           echo "external_ip=$EXTERNAL_IP" >> $GITHUB_OUTPUT
 
-      # Step 8: Post summary to GitHub Actions UI
-      - name: Post Result Summary
+      # 8️⃣ Display link in GitHub Actions summary
+      - name: Add summary with external link
+        if: steps.verify.outputs.external_ip != ''
         run: |
-          echo "✅ **Deployment Verification Complete**" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "🌐 **Access the live app here:** [http://${{ steps.verify.outputs.external_ip }}](http://${{ steps.verify.outputs.external_ip }})" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "🕒 Deployment completed on $(date)" >> $GITHUB_STEP_SUMMARY
+          echo "✅ **Deployment Successful!**" >> $GITHUB_STEP_SUMMARY
+          echo "🌍 [Access the app here](http://${{ steps.verify.outputs.external_ip }})" >> $GITHUB_STEP_SUMMARY
+          echo "🕒 Deployment finished at $(date)" >> $GITHUB_STEP_SUMMARY

@@ -1,5 +1,12 @@
-# Updated CI/CD with verify deployment
 name: CI/CD Pipeline for HealthCheck Monitor
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build-and-deploy:
